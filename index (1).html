@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Valentine's Day 💖 | For Kelvin</title>
+
+<style>
+    /* ==================== GLOBAL STYLES ==================== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Comic Sans MS', 'Arial', sans-serif;
+    }
+
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    body {
+        background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 50%, #FF1493 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        touch-action: manipulation;
+        min-height: 100vh;
+        position: relative;
+    }
+
+    /* ==================== FLOATING HEARTS ANIMATION ==================== */
+    .heart {
+        position: absolute;
+        font-size: 20px;
+        animation: float 6s linear infinite;
+        opacity: 0.7;
+        pointer-events: none;
+        z-index: 1;
+    }
+
+    @keyframes float {
+        from {
+            transform: translateY(100vh) rotate(0deg);
+        }
+        to {
+            transform: translateY(-10vh) rotate(360deg);
+        }
+    }
+
+    /* ==================== MAIN CONTAINER ==================== */
+    .container {
+        z-index: 10;
+        padding: 30px;
+        max-width: 90%;
+    }
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 50px;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        animation: pulse 2s ease-in-out infinite;
+        line-height: 1.3;
+    }
+
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+
+    /* ==================== BUTTONS CONTAINER ==================== */
+    .buttons {
+        position: relative;
+        height: 200px;
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 80px;
+    }
+
+    button {
+        padding: 20px 45px;
+        font-size: 1.4rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        position: relative;
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+    /* YES BUTTON - Moves away 100 times, then becomes catchable */
+    #yes {
+        background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
+        color: white;
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    #yes:hover {
+        box-shadow: 0 8px 25px rgba(255,20,147,0.5);
+    }
+
+    #yes.catchable {
+        animation: glow 1.5s ease-in-out infinite;
+    }
+
+    @keyframes glow {
+        0%, 100% { 
+            box-shadow: 0 6px 20px rgba(255,20,147,0.4); 
+        }
+        50% { 
+            box-shadow: 0 6px 35px rgba(255,20,147,0.8),
+                        0 0 60px rgba(255,20,147,0.6); 
+        }
+    }
+
+    /* NO BUTTON - Shows warnings when clicked */
+    #no {
+        background: linear-gradient(135deg, #696969 0%, #505050 100%);
+        color: white;
+        position: relative;
+    }
+
+    #no:hover {
+        background: linear-gradient(135deg, #808080 0%, #606060 100%);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+    }
+
+    #no.blocked {
+        background: #333;
+        cursor: not-allowed;
+        opacity: 0.4;
+    }
+
+    /* ==================== SUCCESS RESULT SCREEN ==================== */
+    .result {
+        display: none;
+        animation: fadeIn 1s ease-in;
+    }
+
+    @keyframes fadeIn {
+        from { 
+            opacity: 0; 
+            transform: scale(0.5) rotate(-10deg); 
+        }
+        to { 
+            opacity: 1; 
+            transform: scale(1) rotate(0deg); 
+        }
+    }
+
+    .result h2 {
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 30px;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        animation: bounce 1s ease infinite;
+    }
+
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-10px); }
+    }
+
+    .result img {
+        width: 100%;
+        max-width: 400px;
+        border-radius: 25px;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
+        border: 5px solid white;
+    }
+
+    /* ==================== GRAFFITI TEXT ==================== */
+    .graffiti {
+        position: absolute;
+        font-size: 1.8rem;
+        font-weight: bold;
+        color: hsl(var(--hue), 100%, 70%);
+        transform: rotate(var(--rot));
+        opacity: 0;
+        animation: graffitiAppear 0.6s ease-out forwards;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+        pointer-events: none;
+        z-index: 5;
+    }
+
+    @keyframes graffitiAppear {
+        from { 
+            opacity: 0; 
+            transform: rotate(var(--rot)) scale(0);
+        }
+        to { 
+            opacity: 0.9; 
+            transform: rotate(var(--rot)) scale(1);
+        }
+    }
+
+    /* ==================== WARNING MODAL ==================== */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        animation: fadeInModal 0.3s ease;
+    }
+
+    @keyframes fadeInModal {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: white;
+        padding: 40px 50px;
+        border-radius: 25px;
+        text-align: center;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+        max-width: 90%;
+        width: 450px;
+        animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translate(-50%, -60%);
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+    }
+
+    .modal-content h3 {
+        color: #FF1493;
+        font-size: 2rem;
+        margin-bottom: 20px;
+    }
+
+    .modal-content p {
+        color: #333;
+        font-size: 1.3rem;
+        margin-bottom: 30px;
+        line-height: 1.5;
+    }
+
+    .modal-content button {
+        background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
+        color: white;
+        padding: 15px 35px;
+        font-size: 1.1rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 4px 15px rgba(255,20,147,0.4);
+        transition: all 0.3s ease;
+    }
+
+    .modal-content button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(255,20,147,0.6);
+    }
+
+    .modal-content button:active {
+        transform: scale(0.95);
+    }
+
+    /* ==================== BLOCKED MESSAGE ==================== */
+    .blocked-message {
+        display: none;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 30px;
+        border-radius: 20px;
+        margin-top: 30px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        animation: shake 0.5s ease;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-10px); }
+        75% { transform: translateX(10px); }
+    }
+
+    .blocked-message h3 {
+        color: #FF1493;
+        font-size: 1.8rem;
+        margin-bottom: 15px;
+    }
+
+    .blocked-message p {
+        color: #333;
+        font-size: 1.2rem;
+    }
+
+    /* ==================== RESPONSIVE DESIGN ==================== */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 35px;
+            padding: 0 10px;
+        }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+        }
+
+        .buttons {
+            height: 180px;
+            gap: 50px;
+        }
+
+        .result h2 {
+            font-size: 2rem;
+            padding: 0 10px;
+        }
+
+        .result img {
+            max-width: 300px;
+        }
+
+        .result p {
+            font-size: 1.2rem;
+            padding: 0 15px;
+        }
+
+        .modal-content {
+            padding: 30px 25px;
+            width: 85%;
+        }
+
+        .modal-content h3 {
+            font-size: 1.5rem;
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+        }
+
+        .graffiti {
+            font-size: 1.2rem;
+        }
+
+        .blocked-message {
+            padding: 20px;
+            margin: 20px 10px;
+        }
+
+        .blocked-message h3 {
+            font-size: 1.5rem;
+        }
+
+        .blocked-message p {
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        body {
+            padding: 10px;
+        }
+
+        h1 {
+            font-size: 1.4rem;
+            margin-bottom: 25px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+        }
+
+        .buttons {
+            height: 150px;
+            gap: 30px;
+        }
+
+        .result h2 {
+            font-size: 1.6rem;
+        }
+
+        .result img {
+            max-width: 250px;
+        }
+
+        .result p {
+            font-size: 1rem;
+            margin-top: 20px !important;
+        }
+
+        .modal-content {
+            padding: 25px 20px;
+            width: 90%;
+        }
+
+        .modal-content h3 {
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .modal-content p {
+            font-size: 1rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-content button {
+            padding: 12px 30px;
+            font-size: 1rem;
+        }
+
+        .graffiti {
+            font-size: 1rem;
+        }
+
+        .blocked-message {
+            padding: 15px;
+            margin: 15px 5px;
+        }
+
+        .blocked-message h3 {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .blocked-message p {
+            font-size: 0.9rem;
+        }
+
+        .heart {
+            font-size: 15px;
+        }
+    }
+
+    /* Extra small devices */
+    @media (max-width: 360px) {
+        h1 {
+            font-size: 1.2rem;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 0.9rem;
+        }
+
+        .buttons {
+            gap: 20px;
+        }
+
+        .result h2 {
+            font-size: 1.4rem;
+        }
+
+        .result img {
+            max-width: 200px;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Main Question Container -->
+<div class="container" id="main">
+    <h1>KELVIN, WILL YOU BE MY VALENTINE? 💖</h1>
+
+    <div class="buttons">
+        <button id="yes">YES ❤️</button>
+        <button id="no">NO 💔</button>
+    </div>
+
+    <!-- Blocked Message (shown after 3 NO attempts) -->
+    <div class="blocked-message" id="blockedMsg">
+        <h3>💔 Temporarily Blocked!</h3>
+        <p>You've broken my heart too many times...<br>
+        Maybe reconsider? The YES button is still waiting! 💕</p>
+    </div>
+</div>
+
+<!-- Success Result Screen -->
+<div class="container result" id="result">
+    <h2>I KNEW YOU'D SAY YES! 💖</h2>
+    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Celebrating Love">
+    <p style="margin-top: 30px; font-size: 1.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
+        Happy Valentine's Day! 💕🌹
+    </p>
+</div>
+
+<!-- Warning Modal -->
+<div id="warningModal" class="modal">
+    <div class="modal-content">
+        <h3 id="modalTitle">⚠️ Warning</h3>
+        <p id="modalMessage">Are you sure?</p>
+        <button onclick="closeModal()">Go Back</button>
+    </div>
+</div>
+
+<script>
+    // ==================== FLOATING HEARTS BACKGROUND ====================
+    function createFloatingHearts() {
+        for (let i = 0; i < 40; i++) {
+            let heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerText = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (4 + Math.random() * 5) + "s";
+            heart.style.fontSize = (15 + Math.random() * 25) + "px";
+            heart.style.animationDelay = Math.random() * 5 + "s";
+            document.body.appendChild(heart);
+        }
+    }
+    createFloatingHearts();
+
+    // ==================== BUTTON ELEMENTS ====================
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const modal = document.getElementById("warningModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMessage = document.getElementById("modalMessage");
+    const blockedMsg = document.getElementById("blockedMsg");
+
+    // ==================== YES BUTTON LOGIC ====================
+    let yesAttempts = 0;
+    const maxYesAttempts = 100; // YES button moves 100 times before becoming clickable
+
+    // Function to move YES button to random position
+    function moveYesButton() {
+        // Get button and viewport dimensions
+        const btnWidth = yesBtn.offsetWidth;
+        const btnHeight = yesBtn.offsetHeight;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        // Calculate safe boundaries (keep button within viewport with more padding on mobile)
+        const padding = viewportWidth < 768 ? 20 : 40;
+        const maxX = Math.max(padding, viewportWidth - btnWidth - padding);
+        const maxY = Math.max(padding, viewportHeight - btnHeight - padding - 150); // Extra space from bottom
+
+        // Random position with minimum padding
+        const randomX = Math.random() * (maxX - padding) + padding;
+        const randomY = Math.random() * (maxY - padding) + padding;
+
+        yesBtn.style.left = randomX + "px";
+        yesBtn.style.top = randomY + "px";
+        yesBtn.style.transform = "none"; // Remove center transform
+    }
+
+    // YES button hover - moves away first 100 times
+    yesBtn.addEventListener("mouseenter", function() {
+        if (yesAttempts < maxYesAttempts) {
+            yesAttempts++;
+            moveYesButton();
+            
+            // After 100 attempts, make it catchable
+            if (yesAttempts >= maxYesAttempts) {
+                yesBtn.classList.add("catchable");
+            }
+        }
+    });
+
+    // For mobile touch - moves away first 100 times
+    yesBtn.addEventListener("touchstart", function(e) {
+        if (yesAttempts < maxYesAttempts) {
+            e.preventDefault();
+            yesAttempts++;
+            moveYesButton();
+            
+            // After 100 attempts, make it catchable
+            if (yesAttempts >= maxYesAttempts) {
+                yesBtn.classList.add("catchable");
+            }
+        }
+    });
+
+    // YES button click - Works after 100 attempts or if clicked directly
+    yesBtn.addEventListener("click", function(e) {
+        if (yesAttempts >= maxYesAttempts) {
+            // Button is catchable after 100 moves, show special success!
+            showSuccessScreen(true); // Pass true for 100-attempt success
+        } else {
+            // User managed to click it directly without hovering - smart!
+            showSuccessScreen(false); // Pass false for quick click
+        }
+    });
+
+    // ==================== NO BUTTON LOGIC ====================
+    let noClickCount = 0;
+    const warnings = [
+        {
+            title: "Are you sure? 😢",
+            message: "Think about all the good times we could have together!"
+        },
+        {
+            title: "This might break my heart 💔",
+            message: "I promise to make this Valentine's Day special..."
+        },
+        {
+            title: "Last chance... choose wisely 😏",
+            message: "Once you click NO again, you'll be temporarily blocked!"
+        }
+    ];
+
+    noBtn.addEventListener("click", function() {
+        if (noClickCount < 3) {
+            // Show warning modal
+            showWarningModal(noClickCount);
+            noClickCount++;
+        } else {
+            // Block user after 3 attempts
+            blockUser();
+        }
+    });
+
+    // ==================== MODAL FUNCTIONS ====================
+    function showWarningModal(index) {
+        modalTitle.textContent = warnings[index].title;
+        modalMessage.textContent = warnings[index].message;
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    // Close modal when clicking outside
+    window.addEventListener("click", function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // ==================== BLOCK USER FUNCTION ====================
+    function blockUser() {
+        noBtn.classList.add("blocked");
+        noBtn.disabled = true;
+        noBtn.style.cursor = "not-allowed";
+        blockedMsg.style.display = "block";
+        
+        // Show final message
+        modalTitle.textContent = "💘 Blocked!";
+        modalMessage.textContent = "You're temporarily blocked for breaking hearts. But the YES button still works! 😉";
+        modal.style.display = "block";
+    }
+
+    // ==================== SUCCESS SCREEN ====================
+    function showSuccessScreen(after100Attempts) {
+        document.getElementById("main").style.display = "none";
+        document.getElementById("result").style.display = "block";
+
+        // Change the GIF based on how they clicked YES
+        const resultImg = document.querySelector(".result img");
+        const resultTitle = document.querySelector(".result h2");
+        const resultText = document.querySelector(".result p");
+        
+        if (after100Attempts) {
+            // Special GIF for persisting through 100 attempts!
+            resultImg.src = "https://media.giphy.com/media/g9582DNuQppxC/giphy.gif";
+            resultTitle.textContent = "WOW! YOU'RE SO PERSISTENT! 💖";
+            resultText.textContent = "100 attempts and you never gave up! Happy Valentine's Day! 💕🌹";
+        } else {
+            // Original GIF for quick clickers
+            resultImg.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
+            resultTitle.textContent = "I KNEW YOU'D SAY YES! 💖";
+            resultText.textContent = "You're so quick! Happy Valentine's Day! 💕🌹";
+        }
+
+        // Create graffiti text all over the screen
+        createGraffiti();
+
+        // Add confetti effect
+        createConfetti();
+    }
+
+    // ==================== GRAFFITI TEXT EFFECT ====================
+    function createGraffiti() {
+        const messages = ["LOVE ❤️", "FOREVER 💕", "VALENTINE 💖", "HAPPY 💗", "US 💘"];
+        
+        for (let i = 0; i < 30; i++) {
+            setTimeout(() => {
+                let graffiti = document.createElement("div");
+                graffiti.className = "graffiti";
+                graffiti.innerText = messages[Math.floor(Math.random() * messages.length)];
+                graffiti.style.left = Math.random() * 95 + "vw";
+                graffiti.style.top = Math.random() * 95 + "vh";
+                graffiti.style.setProperty("--hue", Math.random() * 360);
+                graffiti.style.setProperty("--rot", (Math.random() * 60 - 30) + "deg");
+                graffiti.style.animationDelay = (i * 0.05) + "s";
+                document.body.appendChild(graffiti);
+            }, i * 100);
+        }
+    }
+
+    // ==================== CONFETTI EFFECT ====================
+    function createConfetti() {
+        const confettiSymbols = ["❤️", "💕", "💖", "💗", "💘", "💝", "🌹", "🎉"];
+        
+        for (let i = 0; i < 50; i++) {
+            setTimeout(() => {
+                let confetti = document.createElement("div");
+                confetti.className = "heart";
+                confetti.innerText = confettiSymbols[Math.floor(Math.random() * confettiSymbols.length)];
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.fontSize = (20 + Math.random() * 30) + "px";
+                confetti.style.animationDuration = (2 + Math.random() * 3) + "s";
+                document.body.appendChild(confetti);
+            }, i * 50);
+        }
+    }
+</script>
+
+</body>
+</html>
