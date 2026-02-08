@@ -11,108 +11,116 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
-        font-family: 'Comic Sans MS', 'Arial', sans-serif;
     }
 
     html, body {
         height: 100%;
         width: 100%;
-        overflow-x: hidden;
-        overflow-y: auto;
+        overflow: hidden; /* NO SCROLLING */
+        position: fixed; /* LOCKED */
     }
 
     body {
-        background: linear-gradient(135deg, #FFB6C1 0%, #FF69B4 50%, #FF1493 100%);
+        background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 50%, #f67280 100%);
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
         color: white;
         touch-action: manipulation;
-        min-height: 100vh;
-        position: relative;
+        font-family: 'Arial', sans-serif;
     }
+
+    /* ==================== FANCY CURSIVE FONT ==================== */
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&display=swap');
 
     /* ==================== FLOATING HEARTS ANIMATION ==================== */
     .heart {
         position: absolute;
         font-size: 20px;
         animation: float 6s linear infinite;
-        opacity: 0.7;
+        opacity: 0.6;
         pointer-events: none;
         z-index: 1;
     }
 
     @keyframes float {
         from {
-            transform: translateY(100vh) rotate(0deg);
+            transform: translateY(110vh) rotate(0deg);
         }
         to {
-            transform: translateY(-10vh) rotate(360deg);
+            transform: translateY(-20vh) rotate(360deg);
         }
     }
 
     /* ==================== MAIN CONTAINER ==================== */
     .container {
         z-index: 10;
-        padding: 30px;
-        max-width: 90%;
+        padding: 20px;
+        max-width: 95%;
+        position: relative;
     }
 
     h1 {
-        font-size: 2.5rem;
-        font-weight: bold;
-        margin-bottom: 50px;
-        text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
+        font-family: 'Great Vibes', cursive;
+        font-size: 3.5rem;
+        font-weight: normal;
+        margin-bottom: 60px;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
         animation: pulse 2s ease-in-out infinite;
-        line-height: 1.3;
+        line-height: 1.4;
+        color: #fff;
+        letter-spacing: 2px;
     }
 
     @keyframes pulse {
         0%, 100% { transform: scale(1); }
-        50% { transform: scale(1.05); }
+        50% { transform: scale(1.03); }
     }
 
     /* ==================== BUTTONS CONTAINER ==================== */
     .buttons {
         position: relative;
-        height: 200px;
-        margin-top: 30px;
+        height: 150px;
+        margin-top: 40px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 80px;
+        gap: 100px;
     }
 
     button {
-        padding: 20px 45px;
-        font-size: 1.4rem;
+        padding: 22px 50px;
+        font-size: 1.5rem;
         font-weight: bold;
         border: none;
         border-radius: 50px;
         cursor: pointer;
         transition: all 0.3s ease;
-        box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
         position: relative;
+        font-family: 'Pacifico', cursive;
+        letter-spacing: 1px;
     }
 
     button:active {
         transform: scale(0.95);
     }
 
-    /* YES BUTTON - Moves away 100 times, then becomes catchable */
+    /* YES BUTTON */
     #yes {
-        background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
+        background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
         color: white;
         position: absolute;
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
-        transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border: 3px solid rgba(255,255,255,0.3);
     }
 
     #yes:hover {
-        box-shadow: 0 8px 25px rgba(255,20,147,0.5);
+        box-shadow: 0 10px 30px rgba(255,107,157,0.6);
     }
 
     #yes.catchable {
@@ -121,42 +129,45 @@
 
     @keyframes glow {
         0%, 100% { 
-            box-shadow: 0 6px 20px rgba(255,20,147,0.4); 
+            box-shadow: 0 8px 25px rgba(255,107,157,0.5);
+            transform: translate(-50%, -50%) scale(1);
         }
         50% { 
-            box-shadow: 0 6px 35px rgba(255,20,147,0.8),
-                        0 0 60px rgba(255,20,147,0.6); 
+            box-shadow: 0 8px 40px rgba(255,107,157,0.9),
+                        0 0 70px rgba(255,107,157,0.7);
+            transform: translate(-50%, -50%) scale(1.05);
         }
     }
 
-    /* NO BUTTON - Shows warnings when clicked */
+    /* NO BUTTON */
     #no {
-        background: linear-gradient(135deg, #696969 0%, #505050 100%);
+        background: linear-gradient(135deg, #8e9aaf 0%, #697689 100%);
         color: white;
         position: relative;
+        border: 3px solid rgba(255,255,255,0.2);
     }
 
     #no:hover {
-        background: linear-gradient(135deg, #808080 0%, #606060 100%);
-        box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+        background: linear-gradient(135deg, #a0aec0 0%, #7a8599 100%);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
 
     #no.blocked {
-        background: #333;
+        background: #555;
         cursor: not-allowed;
-        opacity: 0.4;
+        opacity: 0.3;
     }
 
     /* ==================== SUCCESS RESULT SCREEN ==================== */
     .result {
         display: none;
-        animation: fadeIn 1s ease-in;
+        animation: fadeIn 1.2s ease-in;
     }
 
     @keyframes fadeIn {
         from { 
             opacity: 0; 
-            transform: scale(0.5) rotate(-10deg); 
+            transform: scale(0.3) rotate(-15deg); 
         }
         to { 
             opacity: 1; 
@@ -165,38 +176,48 @@
     }
 
     .result h2 {
-        font-size: 3rem;
-        font-weight: bold;
-        margin-bottom: 30px;
-        text-shadow: 3px 3px 6px rgba(0,0,0,0.3);
-        animation: bounce 1s ease infinite;
+        font-family: 'Great Vibes', cursive;
+        font-size: 3.5rem;
+        font-weight: normal;
+        margin-bottom: 40px;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+        animation: bounce 1.2s ease infinite;
+        letter-spacing: 2px;
     }
 
     @keyframes bounce {
         0%, 100% { transform: translateY(0); }
-        50% { transform: translateY(-10px); }
+        50% { transform: translateY(-15px); }
     }
 
     .result img {
         width: 100%;
-        max-width: 400px;
-        border-radius: 25px;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.4);
-        border: 5px solid white;
+        max-width: 450px;
+        border-radius: 30px;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+        border: 5px solid rgba(255,255,255,0.8);
+    }
+
+    .result p {
+        margin-top: 30px;
+        font-size: 1.8rem;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+        font-family: 'Pacifico', cursive;
     }
 
     /* ==================== GRAFFITI TEXT ==================== */
     .graffiti {
         position: absolute;
-        font-size: 1.8rem;
+        font-size: 2rem;
         font-weight: bold;
-        color: hsl(var(--hue), 100%, 70%);
+        color: hsl(var(--hue), 100%, 75%);
         transform: rotate(var(--rot));
         opacity: 0;
-        animation: graffitiAppear 0.6s ease-out forwards;
-        text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+        animation: graffitiAppear 0.7s ease-out forwards;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.5);
         pointer-events: none;
         z-index: 5;
+        font-family: 'Pacifico', cursive;
     }
 
     @keyframes graffitiAppear {
@@ -205,7 +226,7 @@
             transform: rotate(var(--rot)) scale(0);
         }
         to { 
-            opacity: 0.9; 
+            opacity: 0.95; 
             transform: rotate(var(--rot)) scale(1);
         }
     }
@@ -219,7 +240,7 @@
         top: 0;
         width: 100%;
         height: 100%;
-        background: rgba(0, 0, 0, 0.8);
+        background: rgba(0, 0, 0, 0.85);
         animation: fadeInModal 0.3s ease;
     }
 
@@ -233,19 +254,20 @@
         top: 50%;
         left: 50%;
         transform: translate(-50%, -50%);
-        background: white;
-        padding: 40px 50px;
-        border-radius: 25px;
+        background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+        padding: 45px 55px;
+        border-radius: 30px;
         text-align: center;
-        box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
         max-width: 90%;
-        width: 450px;
-        animation: slideIn 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        width: 480px;
+        animation: slideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border: 4px solid #ff6b9d;
     }
 
     @keyframes slideIn {
         from {
-            transform: translate(-50%, -60%);
+            transform: translate(-50%, -70%);
             opacity: 0;
         }
         to {
@@ -255,33 +277,36 @@
     }
 
     .modal-content h3 {
-        color: #FF1493;
-        font-size: 2rem;
-        margin-bottom: 20px;
+        color: #ff6b9d;
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+        font-family: 'Pacifico', cursive;
     }
 
     .modal-content p {
-        color: #333;
-        font-size: 1.3rem;
-        margin-bottom: 30px;
-        line-height: 1.5;
+        color: #555;
+        font-size: 1.4rem;
+        margin-bottom: 35px;
+        line-height: 1.6;
+        font-family: 'Arial', sans-serif;
     }
 
     .modal-content button {
-        background: linear-gradient(135deg, #FF1493 0%, #FF69B4 100%);
+        background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
         color: white;
-        padding: 15px 35px;
-        font-size: 1.1rem;
+        padding: 16px 40px;
+        font-size: 1.2rem;
         border: none;
         border-radius: 50px;
         cursor: pointer;
-        box-shadow: 0 4px 15px rgba(255,20,147,0.4);
+        box-shadow: 0 6px 20px rgba(255,107,157,0.5);
         transition: all 0.3s ease;
+        font-family: 'Pacifico', cursive;
     }
 
     .modal-content button:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(255,20,147,0.6);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255,107,157,0.7);
     }
 
     .modal-content button:active {
@@ -292,101 +317,171 @@
     .blocked-message {
         display: none;
         background: rgba(255, 255, 255, 0.95);
-        padding: 30px;
-        border-radius: 20px;
-        margin-top: 30px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-        animation: shake 0.5s ease;
+        padding: 35px;
+        border-radius: 25px;
+        margin-top: 40px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        animation: shake 0.6s ease;
+        border: 3px solid #ff6b9d;
     }
 
     @keyframes shake {
         0%, 100% { transform: translateX(0); }
-        25% { transform: translateX(-10px); }
-        75% { transform: translateX(10px); }
+        25% { transform: translateX(-12px); }
+        75% { transform: translateX(12px); }
     }
 
     .blocked-message h3 {
-        color: #FF1493;
-        font-size: 1.8rem;
-        margin-bottom: 15px;
+        color: #ff6b9d;
+        font-size: 2rem;
+        margin-bottom: 18px;
+        font-family: 'Pacifico', cursive;
     }
 
     .blocked-message p {
-        color: #333;
-        font-size: 1.2rem;
+        color: #555;
+        font-size: 1.3rem;
+        font-family: 'Arial', sans-serif;
     }
 
     /* ==================== RESPONSIVE DESIGN ==================== */
     @media (max-width: 768px) {
         h1 {
-            font-size: 1.8rem;
-            margin-bottom: 35px;
+            font-size: 2.5rem;
+            margin-bottom: 40px;
             padding: 0 10px;
         }
 
         button {
-            padding: 15px 35px;
-            font-size: 1.1rem;
+            padding: 18px 38px;
+            font-size: 1.2rem;
         }
 
         .buttons {
-            height: 180px;
-            gap: 50px;
+            height: 140px;
+            gap: 60px;
         }
 
         .result h2 {
-            font-size: 2rem;
+            font-size: 2.5rem;
             padding: 0 10px;
         }
 
         .result img {
-            max-width: 300px;
+            max-width: 320px;
         }
 
         .result p {
-            font-size: 1.2rem;
+            font-size: 1.4rem;
             padding: 0 15px;
         }
 
         .modal-content {
-            padding: 30px 25px;
+            padding: 35px 30px;
             width: 85%;
         }
 
         .modal-content h3 {
+            font-size: 1.8rem;
+        }
+
+        .modal-content p {
+            font-size: 1.2rem;
+        }
+
+        .graffiti {
+            font-size: 1.4rem;
+        }
+
+        .blocked-message {
+            padding: 25px;
+            margin: 25px 10px;
+        }
+
+        .blocked-message h3 {
+            font-size: 1.6rem;
+        }
+
+        .blocked-message p {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 15px 32px;
+            font-size: 1.1rem;
+        }
+
+        .buttons {
+            height: 120px;
+            gap: 40px;
+        }
+
+        .result h2 {
+            font-size: 2rem;
+        }
+
+        .result img {
+            max-width: 280px;
+        }
+
+        .result p {
+            font-size: 1.2rem;
+            margin-top: 20px !important;
+        }
+
+        .modal-content {
+            padding: 28px 22px;
+            width: 88%;
+        }
+
+        .modal-content h3 {
             font-size: 1.5rem;
+            margin-bottom: 18px;
         }
 
         .modal-content p {
             font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .modal-content button {
+            padding: 14px 32px;
+            font-size: 1.1rem;
         }
 
         .graffiti {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
         }
 
         .blocked-message {
-            padding: 20px;
-            margin: 20px 10px;
+            padding: 18px;
+            margin: 18px 8px;
         }
 
         .blocked-message h3 {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
+            margin-bottom: 12px;
         }
 
         .blocked-message p {
             font-size: 1rem;
         }
+
+        .heart {
+            font-size: 16px;
+        }
     }
 
-    @media (max-width: 480px) {
-        body {
-            padding: 10px;
-        }
-
+    @media (max-width: 360px) {
         h1 {
-            font-size: 1.4rem;
-            margin-bottom: 25px;
+            font-size: 1.7rem;
         }
 
         button {
@@ -395,87 +490,33 @@
         }
 
         .buttons {
-            height: 150px;
             gap: 30px;
         }
 
         .result h2 {
-            font-size: 1.6rem;
+            font-size: 1.7rem;
         }
 
         .result img {
-            max-width: 250px;
-        }
-
-        .result p {
-            font-size: 1rem;
-            margin-top: 20px !important;
-        }
-
-        .modal-content {
-            padding: 25px 20px;
-            width: 90%;
-        }
-
-        .modal-content h3 {
-            font-size: 1.3rem;
-            margin-bottom: 15px;
-        }
-
-        .modal-content p {
-            font-size: 1rem;
-            margin-bottom: 20px;
-        }
-
-        .modal-content button {
-            padding: 12px 30px;
-            font-size: 1rem;
-        }
-
-        .graffiti {
-            font-size: 1rem;
-        }
-
-        .blocked-message {
-            padding: 15px;
-            margin: 15px 5px;
-        }
-
-        .blocked-message h3 {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-        }
-
-        .blocked-message p {
-            font-size: 0.9rem;
-        }
-
-        .heart {
-            font-size: 15px;
+            max-width: 220px;
         }
     }
 
-    /* Extra small devices */
-    @media (max-width: 360px) {
+    /* Landscape mode fix */
+    @media (max-height: 600px) and (orientation: landscape) {
         h1 {
-            font-size: 1.2rem;
-        }
-
-        button {
-            padding: 10px 20px;
-            font-size: 0.9rem;
+            font-size: 2rem;
+            margin-bottom: 20px;
         }
 
         .buttons {
-            gap: 20px;
+            height: 100px;
+            margin-top: 20px;
         }
 
-        .result h2 {
-            font-size: 1.4rem;
-        }
-
-        .result img {
-            max-width: 200px;
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
         }
     }
 </style>
@@ -485,7 +526,7 @@
 
 <!-- Main Question Container -->
 <div class="container" id="main">
-    <h1>KELVIN, WILL YOU BE MY VALENTINE? 💖</h1>
+    <h1>Kelvin, Will you be my valentine? 💖</h1>
 
     <div class="buttons">
         <button id="yes">YES ❤️</button>
@@ -502,11 +543,9 @@
 
 <!-- Success Result Screen -->
 <div class="container result" id="result">
-    <h2>I KNEW YOU'D SAY YES! 💖</h2>
-    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Celebrating Love">
-    <p style="margin-top: 30px; font-size: 1.5rem; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);">
-        Happy Valentine's Day! 💕🌹
-    </p>
+    <h2>I knew you'd say YES! 💖</h2>
+    <img id="resultGif" src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Celebrating Love">
+    <p>Happy Valentine's Day! 💕🌹</p>
 </div>
 
 <!-- Warning Modal -->
@@ -521,13 +560,13 @@
 <script>
     // ==================== FLOATING HEARTS BACKGROUND ====================
     function createFloatingHearts() {
-        for (let i = 0; i < 40; i++) {
+        for (let i = 0; i < 35; i++) {
             let heart = document.createElement("div");
             heart.className = "heart";
             heart.innerText = "❤️";
             heart.style.left = Math.random() * 100 + "vw";
-            heart.style.animationDuration = (4 + Math.random() * 5) + "s";
-            heart.style.fontSize = (15 + Math.random() * 25) + "px";
+            heart.style.animationDuration = (5 + Math.random() * 6) + "s";
+            heart.style.fontSize = (16 + Math.random() * 22) + "px";
             heart.style.animationDelay = Math.random() * 5 + "s";
             document.body.appendChild(heart);
         }
@@ -544,65 +583,54 @@
 
     // ==================== YES BUTTON LOGIC ====================
     let yesAttempts = 0;
-    const maxYesAttempts = 100; // YES button moves 100 times before becoming clickable
+    const maxYesAttempts = 100;
 
-    // Function to move YES button to random position
     function moveYesButton() {
-        // Get button and viewport dimensions
         const btnWidth = yesBtn.offsetWidth;
         const btnHeight = yesBtn.offsetHeight;
         const viewportWidth = window.innerWidth;
         const viewportHeight = window.innerHeight;
 
-        // Calculate safe boundaries (keep button within viewport with more padding on mobile)
-        const padding = viewportWidth < 768 ? 20 : 40;
+        const padding = viewportWidth < 768 ? 15 : 30;
         const maxX = Math.max(padding, viewportWidth - btnWidth - padding);
-        const maxY = Math.max(padding, viewportHeight - btnHeight - padding - 150); // Extra space from bottom
+        const maxY = Math.max(padding, viewportHeight - btnHeight - padding - 100);
 
-        // Random position with minimum padding
-        const randomX = Math.random() * (maxX - padding) + padding;
-        const randomY = Math.random() * (maxY - padding) + padding;
+        const randomX = Math.random() * (maxX - padding * 2) + padding;
+        const randomY = Math.random() * (maxY - padding * 2) + padding;
 
         yesBtn.style.left = randomX + "px";
         yesBtn.style.top = randomY + "px";
-        yesBtn.style.transform = "none"; // Remove center transform
+        yesBtn.style.transform = "none";
     }
 
-    // YES button hover - moves away first 100 times
     yesBtn.addEventListener("mouseenter", function() {
         if (yesAttempts < maxYesAttempts) {
             yesAttempts++;
             moveYesButton();
             
-            // After 100 attempts, make it catchable
             if (yesAttempts >= maxYesAttempts) {
                 yesBtn.classList.add("catchable");
             }
         }
     });
 
-    // For mobile touch - moves away first 100 times
     yesBtn.addEventListener("touchstart", function(e) {
         if (yesAttempts < maxYesAttempts) {
             e.preventDefault();
             yesAttempts++;
             moveYesButton();
             
-            // After 100 attempts, make it catchable
             if (yesAttempts >= maxYesAttempts) {
                 yesBtn.classList.add("catchable");
             }
         }
     });
 
-    // YES button click - Works after 100 attempts or if clicked directly
     yesBtn.addEventListener("click", function(e) {
         if (yesAttempts >= maxYesAttempts) {
-            // Button is catchable after 100 moves, show special success!
-            showSuccessScreen(true); // Pass true for 100-attempt success
+            showSuccessScreen(true);
         } else {
-            // User managed to click it directly without hovering - smart!
-            showSuccessScreen(false); // Pass false for quick click
+            showSuccessScreen(false);
         }
     });
 
@@ -625,11 +653,9 @@
 
     noBtn.addEventListener("click", function() {
         if (noClickCount < 3) {
-            // Show warning modal
             showWarningModal(noClickCount);
             noClickCount++;
         } else {
-            // Block user after 3 attempts
             blockUser();
         }
     });
@@ -645,7 +671,6 @@
         modal.style.display = "none";
     }
 
-    // Close modal when clicking outside
     window.addEventListener("click", function(e) {
         if (e.target === modal) {
             closeModal();
@@ -659,7 +684,6 @@
         noBtn.style.cursor = "not-allowed";
         blockedMsg.style.display = "block";
         
-        // Show final message
         modalTitle.textContent = "💘 Blocked!";
         modalMessage.textContent = "You're temporarily blocked for breaking hearts. But the YES button still works! 😉";
         modal.style.display = "block";
@@ -670,27 +694,23 @@
         document.getElementById("main").style.display = "none";
         document.getElementById("result").style.display = "block";
 
-        // Change the GIF based on how they clicked YES
-        const resultImg = document.querySelector(".result img");
+        const resultImg = document.getElementById("resultGif");
         const resultTitle = document.querySelector(".result h2");
         const resultText = document.querySelector(".result p");
         
         if (after100Attempts) {
-            // Special GIF for persisting through 100 attempts!
+            // GIF for 100 attempts - YOU CAN CHANGE THIS URL!
             resultImg.src = "https://media.giphy.com/media/g9582DNuQppxC/giphy.gif";
-            resultTitle.textContent = "WOW! YOU'RE SO PERSISTENT! 💖";
+            resultTitle.textContent = "WOW! You're so persistent! 💖";
             resultText.textContent = "100 attempts and you never gave up! Happy Valentine's Day! 💕🌹";
         } else {
-            // Original GIF for quick clickers
+            // GIF for quick click - YOU CAN CHANGE THIS URL!
             resultImg.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
-            resultTitle.textContent = "I KNEW YOU'D SAY YES! 💖";
+            resultTitle.textContent = "I knew you'd say YES! 💖";
             resultText.textContent = "You're so quick! Happy Valentine's Day! 💕🌹";
         }
 
-        // Create graffiti text all over the screen
         createGraffiti();
-
-        // Add confetti effect
         createConfetti();
     }
 
@@ -698,35 +718,35 @@
     function createGraffiti() {
         const messages = ["LOVE ❤️", "FOREVER 💕", "VALENTINE 💖", "HAPPY 💗", "US 💘"];
         
-        for (let i = 0; i < 30; i++) {
+        for (let i = 0; i < 25; i++) {
             setTimeout(() => {
                 let graffiti = document.createElement("div");
                 graffiti.className = "graffiti";
                 graffiti.innerText = messages[Math.floor(Math.random() * messages.length)];
-                graffiti.style.left = Math.random() * 95 + "vw";
-                graffiti.style.top = Math.random() * 95 + "vh";
+                graffiti.style.left = Math.random() * 90 + "vw";
+                graffiti.style.top = Math.random() * 90 + "vh";
                 graffiti.style.setProperty("--hue", Math.random() * 360);
-                graffiti.style.setProperty("--rot", (Math.random() * 60 - 30) + "deg");
-                graffiti.style.animationDelay = (i * 0.05) + "s";
+                graffiti.style.setProperty("--rot", (Math.random() * 50 - 25) + "deg");
+                graffiti.style.animationDelay = (i * 0.04) + "s";
                 document.body.appendChild(graffiti);
-            }, i * 100);
+            }, i * 80);
         }
     }
 
     // ==================== CONFETTI EFFECT ====================
     function createConfetti() {
-        const confettiSymbols = ["❤️", "💕", "💖", "💗", "💘", "💝", "🌹", "🎉"];
+        const confettiSymbols = ["❤️", "💕", "💖", "💗", "💘", "💝", "🌹", "🎉", "✨"];
         
-        for (let i = 0; i < 50; i++) {
+        for (let i = 0; i < 45; i++) {
             setTimeout(() => {
                 let confetti = document.createElement("div");
                 confetti.className = "heart";
                 confetti.innerText = confettiSymbols[Math.floor(Math.random() * confettiSymbols.length)];
                 confetti.style.left = Math.random() * 100 + "vw";
-                confetti.style.fontSize = (20 + Math.random() * 30) + "px";
-                confetti.style.animationDuration = (2 + Math.random() * 3) + "s";
+                confetti.style.fontSize = (22 + Math.random() * 28) + "px";
+                confetti.style.animationDuration = (2.5 + Math.random() * 3.5) + "s";
                 document.body.appendChild(confetti);
-            }, i * 50);
+            }, i * 45);
         }
     }
 </script>
