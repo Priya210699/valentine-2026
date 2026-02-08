@@ -630,10 +630,22 @@
     });
 
     yesBtn.addEventListener("click", function(e) {
+        // Only allow click if they've done 100 attempts OR if they clicked fast before hover fired
         if (yesAttempts >= maxYesAttempts) {
+            // After 100 attempts - show special success
             showSuccessScreen(true);
-        } else {
+        } else if (yesAttempts === 0) {
+            // They clicked BEFORE any hover happened - super fast!
             showSuccessScreen(false);
+        } else {
+            // They're still trying to catch it - button moves away
+            e.preventDefault();
+            yesAttempts++;
+            moveYesButton();
+            
+            if (yesAttempts >= maxYesAttempts) {
+                yesBtn.classList.add("catchable");
+            }
         }
     });
 
