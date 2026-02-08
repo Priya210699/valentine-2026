@@ -3,262 +3,767 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<title>Valentine 💖</title>
+<title>Valentine's Day 💖 | For Kelvin</title>
 
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family: Arial, sans-serif;
-}
+    /* ==================== GLOBAL STYLES ==================== */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-html,body{
-    width:100%;
-    height:100%;
-    overflow:hidden;
-}
+    html, body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden; /* NO SCROLLING */
+        position: fixed; /* LOCKED */
+    }
 
-body{
-    background: linear-gradient(135deg,#ff6b9d,#c06c84,#f67280);
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    color:#fff;
-    text-align:center;
-}
+    body {
+        background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 50%, #f67280 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        touch-action: manipulation;
+        font-family: 'Arial', sans-serif;
+    }
 
-@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&display=swap');
+    /* ==================== FANCY CURSIVE FONT ==================== */
+    @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&display=swap');
 
-.container{
-    max-width:95%;
-    z-index:10;
-}
+    /* ==================== FLOATING HEARTS ANIMATION ==================== */
+    .heart {
+        position: absolute;
+        font-size: 20px;
+        animation: float 6s linear infinite;
+        opacity: 0.6;
+        pointer-events: none;
+        z-index: 1;
+    }
 
-h1{
-    font-family:'Great Vibes',cursive;
-    font-size:3rem;
-    margin-bottom:40px;
-}
+    @keyframes float {
+        from {
+            transform: translateY(110vh) rotate(0deg);
+        }
+        to {
+            transform: translateY(-20vh) rotate(360deg);
+        }
+    }
 
-/* BUTTON AREA */
-.buttons{
-    position:relative;
-    width:100%;
-    height:60vh;
-    overflow:hidden;
-}
+    /* ==================== MAIN CONTAINER ==================== */
+    .container {
+        z-index: 10;
+        padding: 20px;
+        max-width: 95%;
+        position: relative;
+    }
 
-/* BUTTON COMMON */
-button{
-    padding:18px 40px;
-    font-size:1.4rem;
-    border:none;
-    border-radius:50px;
-    cursor:pointer;
-    font-family:'Pacifico',cursive;
-    box-shadow:0 8px 25px rgba(0,0,0,0.3);
-}
+    h1 {
+        font-family: 'Great Vibes', cursive;
+        font-size: 3.5rem;
+        font-weight: normal;
+        margin-bottom: 60px;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+        animation: pulse 2s ease-in-out infinite;
+        line-height: 1.4;
+        color: #fff;
+        letter-spacing: 2px;
+    }
 
-/* YES BUTTON */
-#yes{
-    position:absolute;
-    left:30%;
-    top:40%;
-    background:linear-gradient(135deg,#ff6b9d,#c06c84);
-    color:white;
-}
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.03); }
+    }
 
-/* NO BUTTON */
-#no{
-    position:absolute;
-    right:30%;
-    top:40%;
-    background:linear-gradient(135deg,#8e9aaf,#697689);
-    color:white;
-}
+    /* ==================== BUTTONS CONTAINER ==================== */
+    .buttons {
+        position: relative;
+        height: 150px;
+        margin-top: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 100px;
+    }
 
-#no.blocked{
-    opacity:0.3;
-    cursor:not-allowed;
-}
+    button {
+        padding: 22px 50px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
+        position: relative;
+        font-family: 'Pacifico', cursive;
+        letter-spacing: 1px;
+    }
 
-/* RESULT SCREEN */
-.result{
-    display:none;
-    animation:fadeIn 1s ease;
-}
+    button:active {
+        transform: scale(0.95);
+    }
 
-@keyframes fadeIn{
-    from{opacity:0;transform:scale(0.6);}
-    to{opacity:1;transform:scale(1);}
-}
+    /* YES BUTTON */
+    #yes {
+        background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+        color: white;
+        position: absolute;
+        left: calc(50% - 130px);
+        top: 50%;
+        transform: translateY(-50%);
+        transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border: 3px solid rgba(255,255,255,0.3);
+    }
 
-.result h2{
-    font-family:'Great Vibes',cursive;
-    font-size:3rem;
-}
+    #yes:hover {
+        box-shadow: 0 10px 30px rgba(255,107,157,0.6);
+    }
 
-.result img{
-    max-width:320px;
-    margin-top:20px;
-    border-radius:25px;
-}
+    #yes.catchable {
+        animation: glow 1.5s ease-in-out infinite;
+    }
 
-.result p{
-    margin-top:20px;
-    font-size:1.5rem;
-    font-family:'Pacifico',cursive;
-}
+    @keyframes glow {
+        0%, 100% { 
+            box-shadow: 0 8px 25px rgba(255,107,157,0.5);
+            transform: translateY(-50%) scale(1);
+        }
+        50% { 
+            box-shadow: 0 8px 40px rgba(255,107,157,0.9),
+                        0 0 70px rgba(255,107,157,0.7);
+            transform: translateY(-50%) scale(1.05);
+        }
+    }
 
-/* BLOCK MESSAGE */
-.blocked-message{
-    display:none;
-    margin-top:30px;
-    background:#fff;
-    color:#555;
-    padding:25px;
-    border-radius:20px;
-}
+    /* NO BUTTON */
+    #no {
+        background: linear-gradient(135deg, #8e9aaf 0%, #697689 100%);
+        color: white;
+        position: absolute;
+        left: calc(50% + 130px);
+        top: 50%;
+        transform: translateY(-50%);
+        border: 3px solid rgba(255,255,255,0.2);
+    }
 
-/* MODAL */
-.modal{
-    display:none;
-    position:fixed;
-    inset:0;
-    background:rgba(0,0,0,0.8);
-}
+    #no:hover {
+        background: linear-gradient(135deg, #a0aec0 0%, #7a8599 100%);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
 
-.modal-content{
-    background:#fff;
-    color:#555;
-    padding:30px;
-    border-radius:20px;
-    width:85%;
-    max-width:400px;
-    margin:20% auto;
-}
+    #no.blocked {
+        background: #555;
+        cursor: not-allowed;
+        opacity: 0.3;
+    }
 
-.modal-content h3{
-    color:#ff6b9d;
-    font-family:'Pacifico',cursive;
-}
+    /* ==================== SUCCESS RESULT SCREEN ==================== */
+    .result {
+        display: none;
+        animation: fadeIn 1.2s ease-in;
+    }
 
-.modal-content button{
-    margin-top:20px;
-    background:#ff6b9d;
-    color:white;
-}
+    @keyframes fadeIn {
+        from { 
+            opacity: 0; 
+            transform: scale(0.3) rotate(-15deg); 
+        }
+        to { 
+            opacity: 1; 
+            transform: scale(1) rotate(0deg); 
+        }
+    }
 
-/* HEARTS */
-.heart{
-    position:absolute;
-    animation:float 6s linear infinite;
-    opacity:0.6;
-}
+    .result h2 {
+        font-family: 'Great Vibes', cursive;
+        font-size: 3.5rem;
+        font-weight: normal;
+        margin-bottom: 40px;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
+        animation: bounce 1.2s ease infinite;
+        letter-spacing: 2px;
+    }
 
-@keyframes float{
-    from{transform:translateY(110vh);}
-    to{transform:translateY(-10vh);}
-}
+    @keyframes bounce {
+        0%, 100% { transform: translateY(0); }
+        50% { transform: translateY(-15px); }
+    }
 
+    .result img {
+        width: 100%;
+        max-width: 450px;
+        border-radius: 30px;
+        box-shadow: 0 15px 50px rgba(0,0,0,0.5);
+        border: 5px solid rgba(255,255,255,0.8);
+    }
+
+    .result p {
+        margin-top: 30px;
+        font-size: 1.8rem;
+        text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
+        font-family: 'Pacifico', cursive;
+    }
+
+    /* ==================== GRAFFITI TEXT ==================== */
+    .graffiti {
+        position: absolute;
+        font-size: 2rem;
+        font-weight: bold;
+        color: hsl(var(--hue), 100%, 75%);
+        transform: rotate(var(--rot));
+        opacity: 0;
+        animation: graffitiAppear 0.7s ease-out forwards;
+        text-shadow: 4px 4px 8px rgba(0,0,0,0.5);
+        pointer-events: none;
+        z-index: 5;
+        font-family: 'Pacifico', cursive;
+    }
+
+    @keyframes graffitiAppear {
+        from { 
+            opacity: 0; 
+            transform: rotate(var(--rot)) scale(0);
+        }
+        to { 
+            opacity: 0.95; 
+            transform: rotate(var(--rot)) scale(1);
+        }
+    }
+
+    /* ==================== WARNING MODAL ==================== */
+    .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.85);
+        animation: fadeInModal 0.3s ease;
+    }
+
+    @keyframes fadeInModal {
+        from { opacity: 0; }
+        to { opacity: 1; }
+    }
+
+    .modal-content {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: linear-gradient(135deg, #fff 0%, #f8f9fa 100%);
+        padding: 45px 55px;
+        border-radius: 30px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+        max-width: 90%;
+        width: 480px;
+        animation: slideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        border: 4px solid #ff6b9d;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translate(-50%, -70%);
+            opacity: 0;
+        }
+        to {
+            transform: translate(-50%, -50%);
+            opacity: 1;
+        }
+    }
+
+    .modal-content h3 {
+        color: #ff6b9d;
+        font-size: 2.2rem;
+        margin-bottom: 25px;
+        font-family: 'Pacifico', cursive;
+    }
+
+    .modal-content p {
+        color: #555;
+        font-size: 1.4rem;
+        margin-bottom: 35px;
+        line-height: 1.6;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .modal-content button {
+        background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
+        color: white;
+        padding: 16px 40px;
+        font-size: 1.2rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        box-shadow: 0 6px 20px rgba(255,107,157,0.5);
+        transition: all 0.3s ease;
+        font-family: 'Pacifico', cursive;
+    }
+
+    .modal-content button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255,107,157,0.7);
+    }
+
+    .modal-content button:active {
+        transform: scale(0.95);
+    }
+
+    /* ==================== BLOCKED MESSAGE ==================== */
+    .blocked-message {
+        display: none;
+        background: rgba(255, 255, 255, 0.95);
+        padding: 35px;
+        border-radius: 25px;
+        margin-top: 40px;
+        box-shadow: 0 12px 35px rgba(0,0,0,0.4);
+        animation: shake 0.6s ease;
+        border: 3px solid #ff6b9d;
+    }
+
+    @keyframes shake {
+        0%, 100% { transform: translateX(0); }
+        25% { transform: translateX(-12px); }
+        75% { transform: translateX(12px); }
+    }
+
+    .blocked-message h3 {
+        color: #ff6b9d;
+        font-size: 2rem;
+        margin-bottom: 18px;
+        font-family: 'Pacifico', cursive;
+    }
+
+    .blocked-message p {
+        color: #555;
+        font-size: 1.3rem;
+        font-family: 'Arial', sans-serif;
+    }
+
+    /* ==================== RESPONSIVE DESIGN ==================== */
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 40px;
+            padding: 0 10px;
+        }
+
+        button {
+            padding: 18px 38px;
+            font-size: 1.2rem;
+        }
+
+        .buttons {
+            height: 140px;
+            gap: 60px;
+        }
+
+        .result h2 {
+            font-size: 2.5rem;
+            padding: 0 10px;
+        }
+
+        .result img {
+            max-width: 320px;
+        }
+
+        .result p {
+            font-size: 1.4rem;
+            padding: 0 15px;
+        }
+
+        .modal-content {
+            padding: 35px 30px;
+            width: 85%;
+        }
+
+        .modal-content h3 {
+            font-size: 1.8rem;
+        }
+
+        .modal-content p {
+            font-size: 1.2rem;
+        }
+
+        .graffiti {
+            font-size: 1.4rem;
+        }
+
+        .blocked-message {
+            padding: 25px;
+            margin: 25px 10px;
+        }
+
+        .blocked-message h3 {
+            font-size: 1.6rem;
+        }
+
+        .blocked-message p {
+            font-size: 1.1rem;
+        }
+    }
+
+    @media (max-width: 480px) {
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        button {
+            padding: 15px 32px;
+            font-size: 1.1rem;
+        }
+
+        .buttons {
+            height: 120px;
+            gap: 40px;
+        }
+
+        .result h2 {
+            font-size: 2rem;
+        }
+
+        .result img {
+            max-width: 280px;
+        }
+
+        .result p {
+            font-size: 1.2rem;
+            margin-top: 20px !important;
+        }
+
+        .modal-content {
+            padding: 28px 22px;
+            width: 88%;
+        }
+
+        .modal-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 18px;
+        }
+
+        .modal-content p {
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+
+        .modal-content button {
+            padding: 14px 32px;
+            font-size: 1.1rem;
+        }
+
+        .graffiti {
+            font-size: 1.1rem;
+        }
+
+        .blocked-message {
+            padding: 18px;
+            margin: 18px 8px;
+        }
+
+        .blocked-message h3 {
+            font-size: 1.3rem;
+            margin-bottom: 12px;
+        }
+
+        .blocked-message p {
+            font-size: 1rem;
+        }
+
+        .heart {
+            font-size: 16px;
+        }
+    }
+
+    @media (max-width: 360px) {
+        h1 {
+            font-size: 1.7rem;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 1rem;
+        }
+
+        .buttons {
+            gap: 30px;
+        }
+
+        .result h2 {
+            font-size: 1.7rem;
+        }
+
+        .result img {
+            max-width: 220px;
+        }
+    }
+
+    /* Landscape mode fix */
+    @media (max-height: 600px) and (orientation: landscape) {
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            height: 100px;
+            margin-top: 20px;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.1rem;
+        }
+    }
 </style>
 </head>
 
 <body>
 
+<!-- Main Question Container -->
 <div class="container" id="main">
-    <h1>Will you be my Valentine? 💖</h1>
+    <h1>Kelvin, Will you be my valentine? 💖</h1>
 
     <div class="buttons">
         <button id="yes">YES ❤️</button>
         <button id="no">NO 💔</button>
     </div>
 
+    <!-- Blocked Message (shown after 3 NO attempts) -->
     <div class="blocked-message" id="blockedMsg">
-        <h3>💔 Blocked!</h3>
-        <p>You clicked NO too many times 😢<br>But YES is still waiting 💕</p>
+        <h3>💔 Temporarily Blocked!</h3>
+        <p>You've broken my heart too many times...<br>
+        Maybe reconsider? The YES button is still waiting! 💕</p>
     </div>
 </div>
 
+<!-- Success Result Screen -->
 <div class="container result" id="result">
-    <h2>I knew it 💖</h2>
-    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif">
-    <p>Happy Valentine’s Day 🌹</p>
+    <h2>I knew you'd say YES! 💖</h2>
+    <img id="resultGif" src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Celebrating Love">
+    <p>Happy Valentine's Day! 💕🌹</p>
 </div>
 
-<div class="modal" id="modal">
+<!-- Warning Modal -->
+<div id="warningModal" class="modal">
     <div class="modal-content">
-        <h3 id="modalTitle"></h3>
-        <p id="modalText"></p>
+        <h3 id="modalTitle">⚠️ Warning</h3>
+        <p id="modalMessage">Are you sure?</p>
         <button onclick="closeModal()">Go Back</button>
     </div>
 </div>
 
 <script>
-/* HEART BACKGROUND */
-for(let i=0;i<25;i++){
-    let h=document.createElement("div");
-    h.className="heart";
-    h.innerText="❤️";
-    h.style.left=Math.random()*100+"vw";
-    h.style.fontSize=16+Math.random()*20+"px";
-    h.style.animationDuration=4+Math.random()*4+"s";
-    document.body.appendChild(h);
-}
-
-/* ELEMENTS */
-const yes=document.getElementById("yes");
-const no=document.getElementById("no");
-const modal=document.getElementById("modal");
-const modalTitle=document.getElementById("modalTitle");
-const modalText=document.getElementById("modalText");
-const blocked=document.getElementById("blockedMsg");
-
-let yesMoves=0;
-let noCount=0;
-
-/* MOVE YES SAFELY */
-function moveYes(){
-    const box=document.querySelector(".buttons");
-    const rect=box.getBoundingClientRect();
-    const maxX=rect.width-yes.offsetWidth-10;
-    const maxY=rect.height-yes.offsetHeight-10;
-    yes.style.left=Math.random()*maxX+"px";
-    yes.style.top=Math.random()*maxY+"px";
-}
-
-yes.addEventListener("mouseenter",()=>{ if(yesMoves<15){yesMoves++;moveYes();}});
-yes.addEventListener("touchstart",(e)=>{e.preventDefault();if(yesMoves<15){yesMoves++;moveYes();}});
-
-yes.addEventListener("click",()=>{
-    document.getElementById("main").style.display="none";
-    document.getElementById("result").style.display="block";
-});
-
-/* NO LOGIC */
-const warnings=[
-    "Are you sure? 😢",
-    "This hurts 💔",
-    "Last chance 😏"
-];
-
-no.addEventListener("click",()=>{
-    if(noCount<warnings.length){
-        modalTitle.innerText=warnings[noCount];
-        modalText.innerText="Think again 💕";
-        modal.style.display="block";
-        noCount++;
-    }else{
-        no.classList.add("blocked");
-        no.disabled=true;
-        blocked.style.display="block";
+    // ==================== FLOATING HEARTS BACKGROUND ====================
+    function createFloatingHearts() {
+        for (let i = 0; i < 35; i++) {
+            let heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerText = "❤️";
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (5 + Math.random() * 6) + "s";
+            heart.style.fontSize = (16 + Math.random() * 22) + "px";
+            heart.style.animationDelay = Math.random() * 5 + "s";
+            document.body.appendChild(heart);
+        }
     }
-});
+    createFloatingHearts();
 
-function closeModal(){
-    modal.style.display="none";
-}
+    // ==================== BUTTON ELEMENTS ====================
+    const yesBtn = document.getElementById("yes");
+    const noBtn = document.getElementById("no");
+    const modal = document.getElementById("warningModal");
+    const modalTitle = document.getElementById("modalTitle");
+    const modalMessage = document.getElementById("modalMessage");
+    const blockedMsg = document.getElementById("blockedMsg");
+
+    // ==================== YES BUTTON LOGIC ====================
+    let yesAttempts = 0;
+    const maxYesAttempts = 100;
+
+    function moveYesButton() {
+        const btnWidth = yesBtn.offsetWidth;
+        const btnHeight = yesBtn.offsetHeight;
+        const viewportWidth = window.innerWidth;
+        const viewportHeight = window.innerHeight;
+
+        const padding = viewportWidth < 768 ? 15 : 30;
+        const maxX = Math.max(padding, viewportWidth - btnWidth - padding);
+        const maxY = Math.max(padding, viewportHeight - btnHeight - padding - 100);
+
+        const randomX = Math.random() * (maxX - padding * 2) + padding;
+        const randomY = Math.random() * (maxY - padding * 2) + padding;
+
+        yesBtn.style.left = randomX + "px";
+        yesBtn.style.top = randomY + "px";
+        yesBtn.style.transform = "translateY(0)";
+    }
+
+    yesBtn.addEventListener("mouseenter", function() {
+        if (yesAttempts < maxYesAttempts) {
+            yesAttempts++;
+            moveYesButton();
+            
+            if (yesAttempts >= maxYesAttempts) {
+                yesBtn.classList.add("catchable");
+            }
+        }
+    });
+
+    yesBtn.addEventListener("touchstart", function(e) {
+        if (yesAttempts < maxYesAttempts) {
+            e.preventDefault();
+            yesAttempts++;
+            moveYesButton();
+            
+            if (yesAttempts >= maxYesAttempts) {
+                yesBtn.classList.add("catchable");
+            }
+        }
+    });
+
+    yesBtn.addEventListener("click", function(e) {
+        // Only allow click if they've done 100 attempts OR if they clicked fast before hover fired
+        if (yesAttempts >= maxYesAttempts) {
+            // After 100 attempts - show special success
+            showSuccessScreen(true);
+        } else if (yesAttempts === 0) {
+            // They clicked BEFORE any hover happened - super fast!
+            showSuccessScreen(false);
+        } else {
+            // They're still trying to catch it - button moves away
+            e.preventDefault();
+            yesAttempts++;
+            moveYesButton();
+            
+            if (yesAttempts >= maxYesAttempts) {
+                yesBtn.classList.add("catchable");
+            }
+        }
+    });
+
+    // ==================== NO BUTTON LOGIC ====================
+    let noClickCount = 0;
+    const warnings = [
+        {
+            title: "Are you sure? 😢",
+            message: "Think about all the good times we could have together!"
+        },
+        {
+            title: "This might break my heart 💔",
+            message: "I promise to make this Valentine's Day special..."
+        },
+        {
+            title: "Last chance... choose wisely 😏",
+            message: "Once you click NO again, you'll be temporarily blocked!"
+        }
+    ];
+
+    noBtn.addEventListener("click", function() {
+        if (noClickCount < 3) {
+            showWarningModal(noClickCount);
+            noClickCount++;
+        } else {
+            blockUser();
+        }
+    });
+
+    // ==================== MODAL FUNCTIONS ====================
+    function showWarningModal(index) {
+        modalTitle.textContent = warnings[index].title;
+        modalMessage.textContent = warnings[index].message;
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        modal.style.display = "none";
+    }
+
+    window.addEventListener("click", function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // ==================== BLOCK USER FUNCTION ====================
+    function blockUser() {
+        noBtn.classList.add("blocked");
+        noBtn.disabled = true;
+        noBtn.style.cursor = "not-allowed";
+        blockedMsg.style.display = "block";
+        
+        modalTitle.textContent = "💘 Blocked!";
+        modalMessage.textContent = "You're temporarily blocked for breaking hearts. But the YES button still works! 😉";
+        modal.style.display = "block";
+    }
+
+    // ==================== SUCCESS SCREEN ====================
+    function showSuccessScreen(after100Attempts) {
+        document.getElementById("main").style.display = "none";
+        document.getElementById("result").style.display = "block";
+
+        const resultImg = document.getElementById("resultGif");
+        const resultTitle = document.querySelector(".result h2");
+        const resultText = document.querySelector(".result p");
+        
+        if (after100Attempts) {
+            // GIF for 100 attempts - YOU CAN CHANGE THIS URL!
+            resultImg.src = "https://media.giphy.com/media/g9582DNuQppxC/giphy.gif";
+            resultTitle.textContent = "WOW! You're so persistent! 💖";
+            resultText.textContent = "100 attempts and you never gave up! Happy Valentine's Day! 💕🌹";
+        } else {
+            // GIF for quick click - YOU CAN CHANGE THIS URL!
+            resultImg.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
+            resultTitle.textContent = "I knew you'd say YES! 💖";
+            resultText.textContent = "You're so quick! Happy Valentine's Day! 💕🌹";
+        }
+
+        createGraffiti();
+        createConfetti();
+    }
+
+    // ==================== GRAFFITI TEXT EFFECT ====================
+    function createGraffiti() {
+        const messages = ["LOVE ❤️", "FOREVER 💕", "VALENTINE 💖", "HAPPY 💗", "US 💘"];
+        
+        for (let i = 0; i < 25; i++) {
+            setTimeout(() => {
+                let graffiti = document.createElement("div");
+                graffiti.className = "graffiti";
+                graffiti.innerText = messages[Math.floor(Math.random() * messages.length)];
+                graffiti.style.left = Math.random() * 90 + "vw";
+                graffiti.style.top = Math.random() * 90 + "vh";
+                graffiti.style.setProperty("--hue", Math.random() * 360);
+                graffiti.style.setProperty("--rot", (Math.random() * 50 - 25) + "deg");
+                graffiti.style.animationDelay = (i * 0.04) + "s";
+                document.body.appendChild(graffiti);
+            }, i * 80);
+        }
+    }
+
+    // ==================== CONFETTI EFFECT ====================
+    function createConfetti() {
+        const confettiSymbols = ["❤️", "💕", "💖", "💗", "💘", "💝", "🌹", "🎉", "✨"];
+        
+        for (let i = 0; i < 45; i++) {
+            setTimeout(() => {
+                let confetti = document.createElement("div");
+                confetti.className = "heart";
+                confetti.innerText = confettiSymbols[Math.floor(Math.random() * confettiSymbols.length)];
+                confetti.style.left = Math.random() * 100 + "vw";
+                confetti.style.fontSize = (22 + Math.random() * 28) + "px";
+                confetti.style.animationDuration = (2.5 + Math.random() * 3.5) + "s";
+                document.body.appendChild(confetti);
+            }, i * 45);
+        }
+    }
 </script>
 
 </body>
