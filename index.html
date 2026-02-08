@@ -2,7 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Valentine's Day 💖 | For Kelvin</title>
 
 <style>
@@ -14,15 +15,15 @@
     }
 
     html, body {
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    padding: 0;
-    overflow: hidden;      /* 🚫 No scroll */
-    position: fixed;       /* 🚫 No movement */
-    touch-action: none;    /* 🚫 Mobile scroll */
-}
-
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        margin: 0;
+        padding: 0;
+        overflow: hidden;
+        position: relative;
+        touch-action: none;
+    }
 
     body {
         background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 50%, #f67280 100%);
@@ -31,14 +32,13 @@
         justify-content: center;
         text-align: center;
         color: white;
-        touch-action: manipulation;
         font-family: 'Arial', sans-serif;
     }
 
-    /* ==================== FANCY CURSIVE FONT ==================== */
+    /* ==================== FANCY FONT ==================== */
     @import url('https://fonts.googleapis.com/css2?family=Great+Vibes&family=Pacifico&display=swap');
 
-    /* ==================== FLOATING HEARTS ANIMATION ==================== */
+    /* ==================== FLOATING HEARTS ==================== */
     .heart {
         position: absolute;
         font-size: 20px;
@@ -58,17 +58,20 @@
     }
 
     /* ==================== MAIN CONTAINER ==================== */
-  .container {
-    width: 100vw;
-    height: 100vh;
-    max-width: 100%;
-    max-height: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-}
+    .container {
+        width: 100vw;
+        height: 100vh;
+        height: 100dvh;
+        max-width: 100%;
+        max-height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        overflow: hidden;
+        position: relative;
+        z-index: 2;
+    }
 
     h1 {
         font-family: 'Great Vibes', cursive;
@@ -80,6 +83,7 @@
         line-height: 1.4;
         color: #fff;
         letter-spacing: 2px;
+        padding: 0 16px;
     }
 
     @keyframes pulse {
@@ -89,17 +93,19 @@
 
     /* ==================== BUTTONS CONTAINER ==================== */
     .buttons {
-        position: relative;
-        height: 150px;
-        margin-top: 40px;
+        width: 100%;
+        max-width: 500px;
+        height: 180px; /* area for YES to run inside */
+        margin-top: 20px;
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 50px;
+        gap: 120px; /* space between YES and NO */
+        position: relative; /* YES absolute inside this */
     }
 
     button {
-        padding: 22px 50px;
+        padding: 20px 46px;
         font-size: 1.5rem;
         font-weight: bold;
         border: none;
@@ -107,25 +113,26 @@
         cursor: pointer;
         transition: all 0.3s ease;
         box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-        position: relative;
         font-family: 'Pacifico', cursive;
         letter-spacing: 1px;
+        z-index: 3;
     }
 
     button:active {
         transform: scale(0.95);
     }
 
-    /* YES BUTTON */
+    /* YES BUTTON (moves around screen) */
     #yes {
         background: linear-gradient(135deg, #ff6b9d 0%, #c06c84 100%);
         color: white;
         position: absolute;
-        left: calc(50% - 130px);
+        left: 50%;
         top: 50%;
-        transform: translateY(-50%);
-        transition: all 0.25s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        transform: translate(-50%, -50%);
         border: 3px solid rgba(255,255,255,0.3);
+        transition: left 0.25s ease, top 0.25s ease, transform 0.25s ease,
+                    box-shadow 0.3s ease;
     }
 
     #yes:hover {
@@ -137,26 +144,23 @@
     }
 
     @keyframes glow {
-        0%, 100% { 
+        0%, 100% {
             box-shadow: 0 8px 25px rgba(255,107,157,0.5);
-            transform: translateY(-50%) scale(1);
+            transform: translate(-50%, -50%) scale(1);
         }
-        50% { 
+        50% {
             box-shadow: 0 8px 40px rgba(255,107,157,0.9),
                         0 0 70px rgba(255,107,157,0.7);
-            transform: translateY(-50%) scale(1.05);
+            transform: translate(-50%, -50%) scale(1.05);
         }
     }
 
-    /* NO BUTTON */
+    /* NO BUTTON (stays in place) */
     #no {
         background: linear-gradient(135deg, #8e9aaf 0%, #697689 100%);
         color: white;
-        position: absolute;
-        left: calc(50% + 130px);
-        top: 50%;
-        transform: translateY(-50%);
         border: 3px solid rgba(255,255,255,0.2);
+        position: relative;
     }
 
     #no:hover {
@@ -170,20 +174,20 @@
         opacity: 0.3;
     }
 
-    /* ==================== SUCCESS RESULT SCREEN ==================== */
+    /* ==================== SUCCESS SCREEN ==================== */
     .result {
         display: none;
         animation: fadeIn 1.2s ease-in;
     }
 
     @keyframes fadeIn {
-        from { 
-            opacity: 0; 
-            transform: scale(0.3) rotate(-15deg); 
+        from {
+            opacity: 0;
+            transform: scale(0.3) rotate(-15deg);
         }
-        to { 
-            opacity: 1; 
-            transform: scale(1) rotate(0deg); 
+        to {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
         }
     }
 
@@ -195,6 +199,7 @@
         text-shadow: 4px 4px 8px rgba(0,0,0,0.4);
         animation: bounce 1.2s ease infinite;
         letter-spacing: 2px;
+        padding: 0 16px;
     }
 
     @keyframes bounce {
@@ -215,9 +220,10 @@
         font-size: 1.8rem;
         text-shadow: 3px 3px 6px rgba(0,0,0,0.4);
         font-family: 'Pacifico', cursive;
+        padding: 0 16px;
     }
 
-    /* ==================== GRAFFITI TEXT ==================== */
+    /* ==================== GRAFFITI ==================== */
     .graffiti {
         position: absolute;
         font-size: 2rem;
@@ -233,12 +239,12 @@
     }
 
     @keyframes graffitiAppear {
-        from { 
-            opacity: 0; 
+        from {
+            opacity: 0;
             transform: rotate(var(--rot)) scale(0);
         }
-        to { 
-            opacity: 0.95; 
+        to {
+            opacity: 0.95;
             transform: rotate(var(--rot)) scale(1);
         }
     }
@@ -275,6 +281,7 @@
         width: 480px;
         animation: slideIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         border: 4px solid #ff6b9d;
+        z-index: 1001;
     }
 
     @keyframes slideIn {
@@ -335,6 +342,7 @@
         box-shadow: 0 12px 35px rgba(0,0,0,0.4);
         animation: shake 0.6s ease;
         border: 3px solid #ff6b9d;
+        max-width: 420px;
     }
 
     @keyframes shake {
@@ -356,12 +364,16 @@
         font-family: 'Arial', sans-serif;
     }
 
-    /* ==================== RESPONSIVE DESIGN ==================== */
+    /* ==================== RESPONSIVE ==================== */
     @media (max-width: 768px) {
         h1 {
-            font-size: 2.5rem;
+            font-size: 2.6rem;
             margin-bottom: 40px;
-            padding: 0 10px;
+        }
+
+        .buttons {
+            height: 160px;
+            gap: 90px;
         }
 
         button {
@@ -369,14 +381,8 @@
             font-size: 1.2rem;
         }
 
-        .buttons {
-            height: 140px;
-            gap: 60px;
-        }
-
         .result h2 {
             font-size: 2.5rem;
-            padding: 0 10px;
         }
 
         .result img {
@@ -385,54 +391,23 @@
 
         .result p {
             font-size: 1.4rem;
-            padding: 0 15px;
-        }
-
-        .modal-content {
-            padding: 35px 30px;
-            width: 85%;
-        }
-
-        .modal-content h3 {
-            font-size: 1.8rem;
-        }
-
-        .modal-content p {
-            font-size: 1.2rem;
-        }
-
-        .graffiti {
-            font-size: 1.4rem;
-        }
-
-        .blocked-message {
-            padding: 25px;
-            margin: 25px 10px;
-        }
-
-        .blocked-message h3 {
-            font-size: 1.6rem;
-        }
-
-        .blocked-message p {
-            font-size: 1.1rem;
         }
     }
 
     @media (max-width: 480px) {
         h1 {
-            font-size: 2rem;
+            font-size: 2.1rem;
             margin-bottom: 30px;
         }
 
-        button {
-            padding: 15px 32px;
-            font-size: 1.1rem;
+        .buttons {
+            height: 150px;
+            gap: 70px;
         }
 
-        .buttons {
-            height: 120px;
-            gap: 40px;
+        button {
+            padding: 15px 30px;
+            font-size: 1.1rem;
         }
 
         .result h2 {
@@ -454,7 +429,7 @@
         }
 
         .modal-content h3 {
-            font-size: 1.5rem;
+            font-size: 1.7rem;
             margin-bottom: 18px;
         }
 
@@ -491,30 +466,6 @@
         }
     }
 
-    @media (max-width: 360px) {
-        h1 {
-            font-size: 1.7rem;
-        }
-
-        button {
-            padding: 12px 25px;
-            font-size: 1rem;
-        }
-
-        .buttons {
-            gap: 30px;
-        }
-
-        .result h2 {
-            font-size: 1.7rem;
-        }
-
-        .result img {
-            max-width: 220px;
-        }
-    }
-
-    /* Landscape mode fix */
     @media (max-height: 600px) and (orientation: landscape) {
         h1 {
             font-size: 2rem;
@@ -522,8 +473,9 @@
         }
 
         .buttons {
-            height: 100px;
+            height: 130px;
             margin-top: 20px;
+            gap: 80px;
         }
 
         button {
@@ -545,7 +497,7 @@
         <button id="no">NO 💔</button>
     </div>
 
-    <!-- Blocked Message (shown after 3 NO attempts) -->
+    <!-- Blocked Message -->
     <div class="blocked-message" id="blockedMsg">
         <h3>💔 Temporarily Blocked!</h3>
         <p>You've broken my heart too many times...<br>
@@ -556,7 +508,9 @@
 <!-- Success Result Screen -->
 <div class="container result" id="result">
     <h2>I knew you'd say YES! 💖</h2>
-    <img id="resultGif" src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" alt="Celebrating Love">
+    <img id="resultGif"
+         src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif"
+         alt="Celebrating Love">
     <p>Happy Valentine's Day! 💕🌹</p>
 </div>
 
@@ -573,7 +527,7 @@
     // ==================== FLOATING HEARTS BACKGROUND ====================
     function createFloatingHearts() {
         for (let i = 0; i < 35; i++) {
-            let heart = document.createElement("div");
+            const heart = document.createElement("div");
             heart.className = "heart";
             heart.innerText = "❤️";
             heart.style.left = Math.random() * 100 + "vw";
@@ -585,7 +539,7 @@
     }
     createFloatingHearts();
 
-    // ==================== BUTTON ELEMENTS ====================
+    // ==================== ELEMENTS ====================
     const yesBtn = document.getElementById("yes");
     const noBtn = document.getElementById("no");
     const modal = document.getElementById("warningModal");
@@ -595,63 +549,62 @@
 
     // ==================== YES BUTTON LOGIC ====================
     let yesAttempts = 0;
-    const maxYesAttempts = 100;
+    const maxYesAttempts = 5;
 
     function moveYesButton() {
+        // move across almost whole viewport, not just buttons box
+        const vw = window.innerWidth;
+        const vh = window.innerHeight;
+
         const btnWidth = yesBtn.offsetWidth;
         const btnHeight = yesBtn.offsetHeight;
-        const viewportWidth = window.innerWidth;
-        const viewportHeight = window.innerHeight;
 
-        const padding = viewportWidth < 768 ? 15 : 30;
-        const maxX = Math.max(padding, viewportWidth - btnWidth - padding);
-        const maxY = Math.max(padding, viewportHeight - btnHeight - padding - 100);
+        const padding = 20; // keep away from very edges
+        const maxX = vw - btnWidth - padding;
+        const maxY = vh - btnHeight - padding;
 
-        const randomX = Math.random() * (maxX - padding * 2) + padding;
-        const randomY = Math.random() * (maxY - padding * 2) + padding;
+        const x = padding + Math.random() * maxX;
+        const y = padding + Math.random() * maxY;
 
-        yesBtn.style.left = randomX + "px";
-        yesBtn.style.top = randomY + "px";
-        yesBtn.style.transform = "translateY(0)";
+        yesBtn.style.left = `${x}px`;
+        yesBtn.style.top = `${y}px`;
+        yesBtn.style.transform = "translate(0, 0)";
+        yesBtn.style.position = "fixed"; // move relative to viewport
     }
 
-    yesBtn.addEventListener("mouseenter", function() {
+    yesBtn.addEventListener("mouseenter", function () {
         if (yesAttempts < maxYesAttempts) {
             yesAttempts++;
             moveYesButton();
-            
+
             if (yesAttempts >= maxYesAttempts) {
                 yesBtn.classList.add("catchable");
             }
         }
     });
 
-    yesBtn.addEventListener("touchstart", function(e) {
+    yesBtn.addEventListener("touchstart", function (e) {
         if (yesAttempts < maxYesAttempts) {
             e.preventDefault();
             yesAttempts++;
             moveYesButton();
-            
+
             if (yesAttempts >= maxYesAttempts) {
                 yesBtn.classList.add("catchable");
             }
         }
     });
 
-    yesBtn.addEventListener("click", function(e) {
-        // Only allow click if they've done 100 attempts OR if they clicked fast before hover fired
+    yesBtn.addEventListener("click", function (e) {
         if (yesAttempts >= maxYesAttempts) {
-            // After 100 attempts - show special success
             showSuccessScreen(true);
         } else if (yesAttempts === 0) {
-            // They clicked BEFORE any hover happened - super fast!
             showSuccessScreen(false);
         } else {
-            // They're still trying to catch it - button moves away
             e.preventDefault();
             yesAttempts++;
             moveYesButton();
-            
+
             if (yesAttempts >= maxYesAttempts) {
                 yesBtn.classList.add("catchable");
             }
@@ -675,7 +628,7 @@
         }
     ];
 
-    noBtn.addEventListener("click", function() {
+    noBtn.addEventListener("click", function () {
         if (noClickCount < 3) {
             showWarningModal(noClickCount);
             noClickCount++;
@@ -695,40 +648,39 @@
         modal.style.display = "none";
     }
 
-    window.addEventListener("click", function(e) {
+    window.addEventListener("click", function (e) {
         if (e.target === modal) {
             closeModal();
         }
     });
 
-    // ==================== BLOCK USER FUNCTION ====================
+    // ==================== BLOCK USER ====================
     function blockUser() {
         noBtn.classList.add("blocked");
         noBtn.disabled = true;
         noBtn.style.cursor = "not-allowed";
         blockedMsg.style.display = "block";
-        
+
         modalTitle.textContent = "💘 Blocked!";
-        modalMessage.textContent = "You're temporarily blocked for breaking hearts. But the YES button still works! 😉";
+        modalMessage.textContent =
+            "You're temporarily blocked for breaking hearts. But the YES button still works! 😉";
         modal.style.display = "block";
     }
 
     // ==================== SUCCESS SCREEN ====================
-    function showSuccessScreen(after100Attempts) {
+    function showSuccessScreen(afterManyAttempts) {
         document.getElementById("main").style.display = "none";
-        document.getElementById("result").style.display = "block";
+        document.getElementById("result").style.display = "flex";
 
         const resultImg = document.getElementById("resultGif");
         const resultTitle = document.querySelector(".result h2");
         const resultText = document.querySelector(".result p");
-        
-        if (after100Attempts) {
-            // GIF for 100 attempts - YOU CAN CHANGE THIS URL!
+
+        if (afterManyAttempts) {
             resultImg.src = "https://media.giphy.com/media/g9582DNuQppxC/giphy.gif";
             resultTitle.textContent = "WOW! You're so persistent! 💖";
-            resultText.textContent = "100 attempts and you never gave up! Happy Valentine's Day! 💕🌹";
+            resultText.textContent = "Happy Valentine's Day! 💕🌹";
         } else {
-            // GIF for quick click - YOU CAN CHANGE THIS URL!
             resultImg.src = "https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif";
             resultTitle.textContent = "I knew you'd say YES! 💖";
             resultText.textContent = "You're so quick! Happy Valentine's Day! 💕🌹";
@@ -738,13 +690,13 @@
         createConfetti();
     }
 
-    // ==================== GRAFFITI TEXT EFFECT ====================
+    // ==================== GRAFFITI ====================
     function createGraffiti() {
         const messages = ["LOVE ❤️", "FOREVER 💕", "VALENTINE 💖", "HAPPY 💗", "US 💘"];
-        
-        for (let i = 0; i < 25; i++) {
+
+        for (let i = 0; i < 10; i++) {
             setTimeout(() => {
-                let graffiti = document.createElement("div");
+                const graffiti = document.createElement("div");
                 graffiti.className = "graffiti";
                 graffiti.innerText = messages[Math.floor(Math.random() * messages.length)];
                 graffiti.style.left = Math.random() * 90 + "vw";
@@ -757,18 +709,20 @@
         }
     }
 
-    // ==================== CONFETTI EFFECT ====================
+    // ==================== CONFETTI ====================
     function createConfetti() {
         const confettiSymbols = ["❤️", "💕", "💖", "💗", "💘", "💝", "🌹", "🎉", "✨"];
-        
+
         for (let i = 0; i < 45; i++) {
             setTimeout(() => {
-                let confetti = document.createElement("div");
+                const confetti = document.createElement("div");
                 confetti.className = "heart";
-                confetti.innerText = confettiSymbols[Math.floor(Math.random() * confettiSymbols.length)];
+                confetti.innerText =
+                    confettiSymbols[Math.floor(Math.random() * confettiSymbols.length)];
                 confetti.style.left = Math.random() * 100 + "vw";
                 confetti.style.fontSize = (22 + Math.random() * 28) + "px";
-                confetti.style.animationDuration = (2.5 + Math.random() * 3.5) + "s";
+                confetti.style.animationDuration =
+                    (2.5 + Math.random() * 3.5) + "s";
                 document.body.appendChild(confetti);
             }, i * 45);
         }
